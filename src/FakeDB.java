@@ -62,6 +62,7 @@ public class FakeDB {
             FileWriter escritorDeArquivos = new FileWriter(arquivoCsv);
             BufferedWriter escritorDeLinhas = new BufferedWriter(escritorDeArquivos);
             
+            escritorDeLinhas.write("codigo;produto;preco;quantidade\n");
             for(int i = 0; i < produtos.size(); i++){
                 escritorDeLinhas.write(produtos.get(i).toString());
             }
