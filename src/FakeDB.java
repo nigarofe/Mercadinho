@@ -1,15 +1,19 @@
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
 public class FakeDB {
-    private static Vector<Produto> produtos;
+    public static Vector<Produto> produtos;
     
     private static void carregarArquivo(){
         if(produtos == null){
@@ -41,12 +45,38 @@ public class FakeDB {
                 linha = leitorDeLinhas.readLine();
             }
             
+            // Não precisa fechar o FileReader também?
+            // leitorDeArquivo.close();
             leitorDeLinhas.close();
         } catch (FileNotFoundException ex){
             JOptionPane.showConfirmDialog(null, "\"produtos.csv\" não encontrado!", "Erro!", 0);
         } catch (IOException ex){
             JOptionPane.showConfirmDialog(null, "\"produtos.csv\" corrompido!", "Erro!", 0);
         }
+    }
+    
+    public static void atualizarArquivo(){
+        File arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
+        
+        try {
+            FileWriter escritorDeArquivos = new FileWriter(arquivoCsv);
+            BufferedWriter escritorDeLinhas = new BufferedWriter(escritorDeArquivos);
+            
+            for(int i = 0; i < produtos.size(); i++){
+                escritorDeLinhas.write(produtos.get(i).toString());
+            }
+            
+            
+            // Não precisa fechar o FileWriter também?
+            // escritorDeArquivos.close();
+            
+            escritorDeLinhas.flush();
+            escritorDeLinhas.close();
+            
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Diretório corrompido!");
+        }
+        
     }
     
     public static Produto getProdutoComCodigo(int codigo){
@@ -61,5 +91,4 @@ public class FakeDB {
         }
         return null;
     }
-    
 }
