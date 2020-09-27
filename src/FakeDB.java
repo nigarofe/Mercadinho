@@ -1,92 +1,118 @@
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.swing.JOptionPane;
 import java.util.Vector;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-
+import javax.swing.JFileChooser;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileSystemView;
 
 public class FakeDB {
+
     public static Vector<Produto> produtos;
-    
-    private static void carregarArquivo(){
-        if(produtos == null){
+    public static String diretorioDaPlanilha;
+    public static File arquivoCsv;
+
+    private static void carregarArquivo() {
+        if (produtos == null) {
             produtos = new Vector<>();
         } else {
             // Vetor já criado. Limpa o vetor para que informações repetidas não sejam adicionadas
             produtos.clear();
         }
-        
-        
-        File arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
-        
-        try{
+
+        //File arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
+        // Selecionador de arquivo
+        if (arquivoCsv == null) {
+            arquivoCsv = new File("");
+            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
+            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+            int returnValue = jfc.showSaveDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                if (jfc.getSelectedFile().isFile()) {
+                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
+                    arquivoCsv = jfc.getSelectedFile();
+                }
+            }
+        }
+
+        try {
             FileReader leitorDeArquivo = new FileReader(arquivoCsv);   // Informa ao sistema operacional que o arquivo está em uso
             BufferedReader leitorDeLinhas = new BufferedReader(leitorDeArquivo);
-            
+
             leitorDeLinhas.readLine();  // Descartar cabeçalho
             String linha = leitorDeLinhas.readLine();
-            
-            while(linha != null){
+
+            // Enquanto o arquivo não tiver acabado
+            while (linha != null) {
+                // Ler e separar informações da planilha
                 String[] fragmentos = linha.split(";");
-                
                 int codigo = Integer.parseInt(fragmentos[0]);
                 String nome = fragmentos[1];
                 Double preco = Double.parseDouble(fragmentos[2]);
                 int quantidade = Integer.parseInt(fragmentos[3]);
-                
+
+                // Adicionar produto mo vetor
                 produtos.add(new Produto(codigo, nome, preco, quantidade));
+
+                // Ler uma nova linha
                 linha = leitorDeLinhas.readLine();
             }
-            
-            // Não precisa fechar o FileReader também?
-            // leitorDeArquivo.close();
+
             leitorDeLinhas.close();
-        } catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             JOptionPane.showConfirmDialog(null, "\"produtos.csv\" não encontrado!", "Erro!", 0);
-        } catch (IOException ex){
+        } catch (IOException ex) {
             JOptionPane.showConfirmDialog(null, "\"produtos.csv\" corrompido!", "Erro!", 0);
         }
     }
-    
-    public static void atualizarArquivo(){
-        File arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
-        
+
+    public static void atualizarArquivo() {
+        //File arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
+        // Selecionador de arquivo
+        if (arquivoCsv == null) {
+            arquivoCsv = new File("");
+            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
+            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+            int returnValue = jfc.showSaveDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                if (jfc.getSelectedFile().isFile()) {
+                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
+                    arquivoCsv = jfc.getSelectedFile();
+                }
+            }
+        }
+
         try {
             FileWriter escritorDeArquivos = new FileWriter(arquivoCsv);
             BufferedWriter escritorDeLinhas = new BufferedWriter(escritorDeArquivos);
-            
+
             escritorDeLinhas.write("codigo;produto;preco;quantidade\n");
-            for(int i = 0; i < produtos.size(); i++){
+            for (int i = 0; i < produtos.size(); i++) {
                 escritorDeLinhas.write(produtos.get(i).toString());
             }
-            
-            
-            // Não precisa fechar o FileWriter também?
-            // escritorDeArquivos.close();
-            
+
             escritorDeLinhas.flush();
             escritorDeLinhas.close();
-            
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Diretório corrompido!");
         }
-        
+
     }
-    
-    public static Produto getProdutoComCodigo(int codigo){
-        if(produtos == null){
+
+    public static Produto getProdutoComCodigo(int codigo) {
+        if (produtos == null) {
             carregarArquivo();
         }
-        
-        for(Produto prod : produtos){
-            if(prod.getCodigo() == codigo){
+
+        for (Produto prod : produtos) {
+            if (prod.getCodigo() == codigo) {
                 return prod;
             }
         }

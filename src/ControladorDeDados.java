@@ -1,16 +1,15 @@
 
-import java.util.Vector;
-import javax.swing.JPanel;
 import javax.swing.table.AbstractTableModel;
+import java.util.Vector;
 
 public class ControladorDeDados extends AbstractTableModel {
 
     Vector<Produto> produtosDoCarrinho;
-    Vendas vendas_painel;
-    
+    Vendas painelDeVendas;
+
     public ControladorDeDados(Vendas painel) {
         produtosDoCarrinho = new Vector<>();
-        vendas_painel = painel;
+        painelDeVendas = painel;
     }
 
     @Override
@@ -63,7 +62,7 @@ public class ControladorDeDados extends AbstractTableModel {
     public void adicionarProduto(Produto p) {
         produtosDoCarrinho.add(p);
     }
-    
+
     public void removerProduto(int n) {
         produtosDoCarrinho.remove(n);
     }
@@ -80,13 +79,13 @@ public class ControladorDeDados extends AbstractTableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        switch(columnIndex){
-            case 0: 
+        switch (columnIndex) {
+            case 0:
                 return Integer.class;
             case 1:
                 return String.class;
             case 2:
-                 return Double.class;
+                return Double.class;
             case 3:
                 return Integer.class;
             case 4:
@@ -95,28 +94,23 @@ public class ControladorDeDados extends AbstractTableModel {
                 return null;
         }
     }
-    
-    
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         produtosDoCarrinho.get(rowIndex).setQuantidade((int) aValue);
-        this.vendas_painel.updateUI();
-        this.vendas_painel.atualizarValorTotal();
+        this.painelDeVendas.updateUI();
+        this.painelDeVendas.atualizarValorTotal();
     }
-    
-    
-    
-    public Double calcularPrecoTotal(){
+
+    public Double calcularPrecoTotal() {
         Double total = 0.0;
-        for(Produto p : produtosDoCarrinho){
+        for (Produto p : produtosDoCarrinho) {
             total += p.getPreco() * p.getQuantidade();
         }
         return total;
     }
-    
-    public void limparCarrinho(){
+
+    public void limparCarrinho() {
         produtosDoCarrinho.clear();
     }
-
 }
