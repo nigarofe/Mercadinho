@@ -2,12 +2,7 @@
 import javax.swing.JOptionPane;
 import java.util.Vector;
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.filechooser.FileSystemView;
+import java.util.Collections;
 
 public class FakeDB {
 
@@ -15,7 +10,7 @@ public class FakeDB {
     public static String diretorioDaPlanilha;
     public static File arquivoCsv;
 
-    private static void carregarArquivo() {
+    public static void carregarArquivo() {
         if (produtos == null) {
             produtos = new Vector<>();
         } else {
@@ -23,22 +18,23 @@ public class FakeDB {
             produtos.clear();
         }
 
-        //File arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
+        //File 
+        arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
         // Selecionador de arquivo
-        if (arquivoCsv == null) {
-            arquivoCsv = new File("");
-            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
-            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-            int returnValue = jfc.showSaveDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                if (jfc.getSelectedFile().isFile()) {
-                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
-                    arquivoCsv = jfc.getSelectedFile();
-                }
-            }
-        }
+//        if (arquivoCsv == null) {
+//            arquivoCsv = new File("");
+//            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+//            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
+//            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//
+//            int returnValue = jfc.showSaveDialog(null);
+//            if (returnValue == JFileChooser.APPROVE_OPTION) {
+//                if (jfc.getSelectedFile().isFile()) {
+//                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
+//                    arquivoCsv = jfc.getSelectedFile();
+//                }
+//            }
+//        }
 
         try {
             FileReader leitorDeArquivo = new FileReader(arquivoCsv);   // Informa ao sistema operacional que o arquivo está em uso
@@ -72,22 +68,23 @@ public class FakeDB {
     }
 
     public static void atualizarArquivo() {
-        //File arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
+        //File 
+        arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
         // Selecionador de arquivo
-        if (arquivoCsv == null) {
-            arquivoCsv = new File("");
-            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
-            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-            int returnValue = jfc.showSaveDialog(null);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                if (jfc.getSelectedFile().isFile()) {
-                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
-                    arquivoCsv = jfc.getSelectedFile();
-                }
-            }
-        }
+//        if (arquivoCsv == null) {
+//            arquivoCsv = new File("");
+//            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+//            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
+//            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+//
+//            int returnValue = jfc.showSaveDialog(null);
+//            if (returnValue == JFileChooser.APPROVE_OPTION) {
+//                if (jfc.getSelectedFile().isFile()) {
+//                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
+//                    arquivoCsv = jfc.getSelectedFile();
+//                }
+//            }
+//        }
 
         try {
             FileWriter escritorDeArquivos = new FileWriter(arquivoCsv);
@@ -117,5 +114,42 @@ public class FakeDB {
             }
         }
         return null;
+    }
+
+    public static Vector<Produto> getProdutoComNome(String nome) {
+        if (produtos == null) {
+            carregarArquivo();
+        }
+
+        if (nome.equals("")) {
+            return produtos;
+        } else {
+
+            Vector<Produto> temp = new Vector<>();
+            for (Produto prod : produtos) {
+                if (prod.getNome().toLowerCase().contains(nome.toLowerCase())) {
+                    temp.add(prod);
+                }
+            }
+            return temp;
+        }
+    }
+    
+    public static void adicionarProduto(Produto prod){
+        produtos.add(prod);
+        atualizarArquivo();
+    }
+    
+    public static void removerProduto(Produto prod){
+        produtos.remove(prod);
+        atualizarArquivo();
+    }
+    
+    public static int getMaiorCodigo(){
+        Vector<Integer> codigos = new Vector<>();
+        for(Produto prod: produtos){
+            codigos.add(prod.getCodigo());
+        }
+        return Collections.max(codigos);
     }
 }

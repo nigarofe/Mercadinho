@@ -4,40 +4,41 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+public class TelaPrincipalGUI extends javax.swing.JFrame {
 
-public class Main extends javax.swing.JFrame {
     private static CardLayout cardLayout;   // Gerenciador de layout de um container
     private static JPanel jPanel;           // Container
     private static JScrollPane jScrollPane; // Barra de rolagem
-    
-    public Main() {
+
+    public TelaPrincipalGUI() {
         initComponents();
         myInitComponents();
+        FakeDB.carregarArquivo();
     }
-    
-    private void myInitComponents(){
+
+    private void myInitComponents() {
         cardLayout = new CardLayout();
         jPanel = new JPanel(cardLayout);    // Define o gerenciador de layout desse painel para um CardLayout        
         jScrollPane = new JScrollPane();
-        
+
         this.setLayout(new BorderLayout()); // Define o gerenciador de layout desse JFrame para um BorderLayout
         this.add(jScrollPane);              // Adiciona, caso necessário, barras de rolagem nesse JFrame
-        
+
         // Define a área reservada de apresentação de conteúdo
-        jScrollPane.setViewportView(jPanel);    // ? Não iria fazer mais sentido colocar essa linha antes do this.add(jScrollPane)?
-        
+        jScrollPane.setViewportView(jPanel);
+
         // Adicionar painéis (cartas) ao CardLayout (gerenciador de cartas)
         jPanel.add(new EstoqueGUI(), "estoque");
         jPanel.add(new VendasGUI(), "vendas");
-        
+
         // Primeiro painel a ser exibido (carta a ser trazida para cima)
-        cardLayout.show(jPanel, "vendas");
-        jPanel.setPreferredSize(new VendasGUI().getPreferredSize()); // Ajustar o tamanho do painel
+        mudarPainel("vendas", new VendasGUI());
     }
-    
-    public static void mudarTela(String nome, JPanel painel){
+
+    public static void mudarPainel(String nome, JPanel painel) {
         cardLayout.show(jPanel, nome);
-        jPanel.setPreferredSize(painel.getPreferredSize());
+        jPanel.setPreferredSize(painel.getPreferredSize()); // Ajustar o tamanho do painel
+        // Usar HasMap deixa o código desnecessariamente mais complicado e não entendi muito bem :)
     }
 
     @SuppressWarnings("unchecked")
@@ -50,11 +51,11 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1008, Short.MAX_VALUE)
+            .addGap(0, 1010, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 549, Short.MAX_VALUE)
+            .addGap(0, 520, Short.MAX_VALUE)
         );
 
         pack();
@@ -75,20 +76,23 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipalGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new TelaPrincipalGUI().setVisible(true);
             }
         });
     }

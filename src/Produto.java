@@ -1,5 +1,5 @@
 
-public class Produto {
+public class Produto implements Comparable<Produto>{
 
     private int codigo;
     private String nome;
@@ -19,6 +19,10 @@ public class Produto {
 
     public String getNome() {
         return nome;
+    }
+    
+    public void setNome(String nome){
+        this.nome = nome;
     }
 
     public double getPreco() {
@@ -40,5 +44,12 @@ public class Produto {
     @Override
     public String toString() {
         return this.codigo + ";" + this.nome + ";" + this.preco + ";" + this.quantidade + "\n";
+    }
+    
+    
+
+    @Override
+    public int compareTo(Produto o) {
+        return this.nome.toLowerCase().compareTo(o.getNome().toLowerCase());
     }
 }
