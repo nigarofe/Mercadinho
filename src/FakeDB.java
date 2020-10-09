@@ -1,8 +1,10 @@
 
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import java.util.Collections;
 import java.util.Vector;
 import java.io.*;
-import java.util.Collections;
 
 public class FakeDB {
 
@@ -19,22 +21,22 @@ public class FakeDB {
         }
 
         //File 
-        arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
-        // Selecionador de arquivo
-//        if (arquivoCsv == null) {
-//            arquivoCsv = new File("");
-//            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-//            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
-//            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-//
-//            int returnValue = jfc.showSaveDialog(null);
-//            if (returnValue == JFileChooser.APPROVE_OPTION) {
-//                if (jfc.getSelectedFile().isFile()) {
-//                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
-//                    arquivoCsv = jfc.getSelectedFile();
-//                }
-//            }
-//        }
+        //arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
+        // Selecionador de arquivo (comente e use a linha acima caso tenha dificuldades)
+        if (arquivoCsv == null) {
+            arquivoCsv = new File("");
+            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
+            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+            int returnValue = jfc.showSaveDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                if (jfc.getSelectedFile().isFile()) {
+                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
+                    arquivoCsv = jfc.getSelectedFile();
+                }
+            }
+        }
 
         try {
             FileReader leitorDeArquivo = new FileReader(arquivoCsv);   // Informa ao sistema operacional que o arquivo está em uso
@@ -69,22 +71,23 @@ public class FakeDB {
 
     public static void atualizarArquivo() {
         //File 
-        arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
-        // Selecionador de arquivo
-//        if (arquivoCsv == null) {
-//            arquivoCsv = new File("");
-//            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-//            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
-//            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-//
-//            int returnValue = jfc.showSaveDialog(null);
-//            if (returnValue == JFileChooser.APPROVE_OPTION) {
-//                if (jfc.getSelectedFile().isFile()) {
-//                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
-//                    arquivoCsv = jfc.getSelectedFile();
-//                }
-//            }
-//        }
+        //arquivoCsv = new File("C:\\Users\\N\\Downloads\\produtos.csv");
+
+        // Selecionador de arquivo (comente e use a linha acima caso tenha dificuldades)
+        if (arquivoCsv == null) {
+            arquivoCsv = new File("");
+            JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+            jfc.setDialogTitle("Selecione a localização do arquivo \"produtos.csv\": ");
+            jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+            int returnValue = jfc.showSaveDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                if (jfc.getSelectedFile().isFile()) {
+                    //System.out.println("You selected the directory: " + jfc.getSelectedFile());
+                    arquivoCsv = jfc.getSelectedFile();
+                }
+            }
+        };
 
         try {
             FileWriter escritorDeArquivos = new FileWriter(arquivoCsv);
@@ -134,20 +137,20 @@ public class FakeDB {
             return temp;
         }
     }
-    
-    public static void adicionarProduto(Produto prod){
+
+    public static void adicionarProduto(Produto prod) {
         produtos.add(prod);
         atualizarArquivo();
     }
-    
-    public static void removerProduto(Produto prod){
+
+    public static void removerProduto(Produto prod) {
         produtos.remove(prod);
         atualizarArquivo();
     }
-    
-    public static int getMaiorCodigo(){
+
+    public static int getMaiorCodigo() {
         Vector<Integer> codigos = new Vector<>();
-        for(Produto prod: produtos){
+        for (Produto prod : produtos) {
             codigos.add(prod.getCodigo());
         }
         return Collections.max(codigos);

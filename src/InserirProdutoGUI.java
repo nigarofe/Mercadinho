@@ -1,12 +1,12 @@
 
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JDialog;
 
 public class InserirProdutoGUI extends javax.swing.JPanel {
 
     JDialog janela;
     ControladorDeDadosEstoque controlador;
-    
+
     public InserirProdutoGUI(JDialog janela, ControladorDeDadosEstoque controlador) {
         initComponents();
         this.janela = janela;
@@ -30,11 +30,6 @@ public class InserirProdutoGUI extends javax.swing.JPanel {
         campoDeTexto_nome.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
         campoDeTexto_precoUnitario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        campoDeTexto_precoUnitario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoDeTexto_precoUnitarioActionPerformed(evt);
-            }
-        });
 
         campoDeTexto_quantidadeEmEstoque.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 
@@ -122,8 +117,8 @@ public class InserirProdutoGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botao_adicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_adicionarProdutoActionPerformed
-        if (campoDeTexto_nome.getText().isEmpty() || campoDeTexto_precoUnitario.getText().isEmpty() || 
-                campoDeTexto_quantidadeEmEstoque.getText().isEmpty()) {
+        if (campoDeTexto_nome.getText().isEmpty() || campoDeTexto_precoUnitario.getText().isEmpty()
+                || campoDeTexto_quantidadeEmEstoque.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
         } else {
             try {
@@ -146,10 +141,6 @@ public class InserirProdutoGUI extends javax.swing.JPanel {
     private void botao_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_cancelarActionPerformed
         janela.setVisible(false);
     }//GEN-LAST:event_botao_cancelarActionPerformed
-
-    private void campoDeTexto_precoUnitarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDeTexto_precoUnitarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoDeTexto_precoUnitarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

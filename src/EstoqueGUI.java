@@ -1,8 +1,7 @@
 
-import java.awt.Dialog;
-import javax.swing.JOptionPane;
-import java.util.Vector;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import java.awt.Dialog;
 
 public class EstoqueGUI extends javax.swing.JPanel {
 
@@ -168,12 +167,13 @@ public class EstoqueGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_tabelaKeyReleased
 
     private void botao_adicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_adicionarProdutoActionPerformed
-        JDialog janelaCadastro = new JDialog();
-        janelaCadastro.setLocationRelativeTo(this);
-        janelaCadastro.setModalityType(Dialog.ModalityType.TOOLKIT_MODAL);
-        janelaCadastro.setSize(new InserirProdutoGUI(janelaCadastro, this.controladorDeDados).getPreferredSize());
-        janelaCadastro.add(new InserirProdutoGUI(janelaCadastro, this.controladorDeDados));
-        janelaCadastro.setVisible(true);
+        // Janela de cadastro
+        JDialog j = new JDialog();
+        j.setLocationRelativeTo(this);
+        j.setModalityType(Dialog.ModalityType.TOOLKIT_MODAL);
+        j.setSize(new InserirProdutoGUI(j, this.controladorDeDados).getPreferredSize());
+        j.add(new InserirProdutoGUI(j, this.controladorDeDados));
+        j.setVisible(true);
     }//GEN-LAST:event_botao_adicionarProdutoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

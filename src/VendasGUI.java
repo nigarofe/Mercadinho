@@ -258,9 +258,9 @@ public class VendasGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botao_estoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_estoqueActionPerformed
-        String senha = JOptionPane.showInputDialog(null, "Insira a senha de administrador:", "Acessar gerenciador de estoque", 0);
+        String senha = JOptionPane.showInputDialog(null, "Insira a senha de administrador: //\"ifmg\"", "Acessar gerenciador de estoque", 0);
 
-        if (senha.equals(" ")) {
+        if (senha.equals("ifmg")) {
             TelaPrincipalGUI.mudarPainel("estoque", new EstoqueGUI());
         } else {
             JOptionPane.showMessageDialog(null, "Senha incorreta!", "Acessar gerenciador de estoque", 0);
@@ -408,10 +408,7 @@ public class VendasGUI extends javax.swing.JPanel {
     }
 
     public void limparTodosOsCampos() {
-        campoDeTexto_quantidadeASerComprada.setText("");
-        campoDeTexto_quantidadeEmEstoque.setText("");
-        campoDeTexto_precoUnitario.setText("");
-        campoDeTexto_precoParcial.setText("");
+        limparCampos();
         campoDeTexto_codigo.setText("");
         campoDeTexto_nome.setText("");
     }

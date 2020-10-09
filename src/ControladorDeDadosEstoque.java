@@ -1,8 +1,7 @@
 
+import javax.swing.table.AbstractTableModel;
 import java.util.Collections;
 import java.util.Vector;
-import javax.swing.table.AbstractTableModel;
-import sun.misc.VM;
 
 public class ControladorDeDadosEstoque extends AbstractTableModel {
 
@@ -10,8 +9,8 @@ public class ControladorDeDadosEstoque extends AbstractTableModel {
     private EstoqueGUI painelDeEstoque;
 
     public ControladorDeDadosEstoque(EstoqueGUI painel) {
-        produtosDoEstoque = new Vector<>();
-        painelDeEstoque = painel;
+        this.produtosDoEstoque = new Vector<>();
+        this.painelDeEstoque = painel;
         atualizarTabela("");
     }
 
@@ -66,7 +65,7 @@ public class ControladorDeDadosEstoque extends AbstractTableModel {
                 return true;
         }
     }
-    
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         switch (columnIndex) {
@@ -106,7 +105,7 @@ public class ControladorDeDadosEstoque extends AbstractTableModel {
     }
 
     public void removerProduto(int n) {
-FakeDB.removerProduto(produtosDoEstoque.get(n));
+        FakeDB.removerProduto(produtosDoEstoque.get(n));
         produtosDoEstoque.remove(n);
     }
 }
